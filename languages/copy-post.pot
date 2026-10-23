@@ -1,0 +1,676 @@
+# Copyright (C) 2026 Igor Blag
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Copy Post 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/copy-post\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-23T08:27:50+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: copy-post\n"
+
+#. Plugin Name of the plugin
+#: copy-post.php
+msgid "Copy Post"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: copy-post.php
+msgid "https://github.com/igor-blag/copy-post"
+msgstr ""
+
+#. Description of the plugin
+#: copy-post.php
+msgid "Копирование записей и страниц между сайтами сети WordPress Multisite."
+msgstr ""
+
+#. Author of the plugin
+#: copy-post.php
+msgid "Igor Blag"
+msgstr ""
+
+#. Author URI of the plugin
+#: copy-post.php
+msgid "https://github.com/igor-blag"
+msgstr ""
+
+#: includes/class-admin.php:41
+#: includes/class-admin.php:42
+#: includes/class-admin.php:481
+#: includes/class-settings.php:185
+#: includes/class-settings.php:186
+#: includes/class-settings.php:295
+msgid "Копирование записей"
+msgstr ""
+
+#: includes/class-admin.php:52
+msgid "Настройки"
+msgstr ""
+
+#: includes/class-admin.php:109
+msgid "Ошибка"
+msgstr ""
+
+#: includes/class-admin.php:110
+msgid "Выберите хотя бы один целевой сайт."
+msgstr ""
+
+#: includes/class-admin.php:111
+msgid "Выберите хотя бы одну запись."
+msgstr ""
+
+#: includes/class-admin.php:112
+msgid "Создана"
+msgstr ""
+
+#: includes/class-admin.php:113
+msgid "Обновлена"
+msgstr ""
+
+#: includes/class-admin.php:114
+msgid "Пропущена"
+msgstr ""
+
+#: includes/class-admin.php:115
+msgid "Копирование…"
+msgstr ""
+
+#: includes/class-admin.php:116
+msgid "Готово"
+msgstr ""
+
+#: includes/class-admin.php:117
+msgid "Открыть"
+msgstr ""
+
+#: includes/class-admin.php:118
+msgid "На сайте"
+msgstr ""
+
+#: includes/class-admin.php:119
+#: templates/copy-panel.php:167
+msgid "Повторить ошибки"
+msgstr ""
+
+#: includes/class-admin.php:120
+#: templates/copy-panel.php:146
+msgid "Остановить"
+msgstr ""
+
+#: includes/class-admin.php:121
+msgid "копия уже есть"
+msgstr ""
+
+#: includes/class-admin.php:122
+msgid "Предупреждения"
+msgstr ""
+
+#: includes/class-admin.php:123
+msgid "Нет доступных целевых сайтов."
+msgstr ""
+
+#: includes/class-admin.php:124
+msgid "Остановлено"
+msgstr ""
+
+#. translators: 1: created count, 2: updated count, 3: skipped count, 4: error count.
+#: includes/class-admin.php:126
+#, php-format
+msgid "Создано: %1$d, обновлено: %2$d, пропущено: %3$d, ошибок: %4$d"
+msgstr ""
+
+#: includes/class-admin.php:163
+#: includes/class-admin.php:179
+#: includes/class-admin.php:398
+msgid "Копировать на сайт…"
+msgstr ""
+
+#: includes/class-admin.php:270
+#: includes/class-admin.php:275
+#: includes/class-admin.php:664
+msgid "Связи"
+msgstr ""
+
+#: includes/class-admin.php:296
+msgid "Источник"
+msgstr ""
+
+#: includes/class-admin.php:307
+msgid "Копии на других сайтах"
+msgstr ""
+
+#: includes/class-admin.php:325
+msgid "Данные источника отсутствуют."
+msgstr ""
+
+#: includes/class-admin.php:332
+msgid "Сайт:"
+msgstr ""
+
+#: includes/class-admin.php:334
+msgid "Запись:"
+msgstr ""
+
+#: includes/class-admin.php:340
+msgid "Скопирована:"
+msgstr ""
+
+#: includes/class-admin.php:344
+msgid "Открыть на исходном сайте"
+msgstr ""
+
+#: includes/class-admin.php:355
+msgid "Копий пока нет."
+msgstr ""
+
+#: includes/class-admin.php:420
+msgid "Копировать на сайт"
+msgstr ""
+
+#: includes/class-admin.php:423
+#: templates/copy-panel.php:136
+msgid "Закрыть"
+msgstr ""
+
+#: includes/class-admin.php:434
+msgid "Недостаточно прав для копирования записей."
+msgstr ""
+
+#: includes/class-admin.php:483
+msgid "Скопируйте записи и страницы текущего сайта на другие сайты сети. Перед запуском можно выбрать сайты и состав данных."
+msgstr ""
+
+#: includes/class-admin.php:489
+msgid "Выбранные записи"
+msgstr ""
+
+#: includes/class-admin.php:508
+msgid "Выбрать другие записи"
+msgstr ""
+
+#: includes/class-admin.php:528
+msgid "Не выбрано ни одной записи для копирования."
+msgstr ""
+
+#: includes/class-admin.php:529
+msgid "Выбор записей устарел. Выберите записи заново."
+msgstr ""
+
+#: includes/class-admin.php:530
+msgid "Запись недоступна для копирования."
+msgstr ""
+
+#: includes/class-admin.php:557
+msgid "Все статусы"
+msgstr ""
+
+#: includes/class-admin.php:558
+msgid "Опубликованные"
+msgstr ""
+
+#: includes/class-admin.php:559
+msgid "Черновики"
+msgstr ""
+
+#: includes/class-admin.php:560
+msgid "На рассмотрении"
+msgstr ""
+
+#: includes/class-admin.php:561
+msgid "Личные"
+msgstr ""
+
+#: includes/class-admin.php:562
+msgid "Запланированные"
+msgstr ""
+
+#: includes/class-admin.php:577
+msgid "Тип записи"
+msgstr ""
+
+#: includes/class-admin.php:592
+#: includes/class-admin.php:662
+msgid "Статус"
+msgstr ""
+
+#: includes/class-admin.php:603
+msgid "Поиск"
+msgstr ""
+
+#: includes/class-admin.php:604
+msgid "Поиск записей…"
+msgstr ""
+
+#: includes/class-admin.php:607
+msgid "Фильтровать"
+msgstr ""
+
+#: includes/class-admin.php:658
+msgid "Выбрать все записи"
+msgstr ""
+
+#: includes/class-admin.php:660
+msgid "Заголовок"
+msgstr ""
+
+#: includes/class-admin.php:661
+msgid "Тип"
+msgstr ""
+
+#: includes/class-admin.php:663
+msgid "Дата"
+msgstr ""
+
+#: includes/class-admin.php:670
+msgid "Записей не найдено."
+msgstr ""
+
+#. translators: %s: post title.
+#: includes/class-admin.php:688
+#, php-format
+msgid "Выбрать «%s»"
+msgstr ""
+
+#: includes/class-ajax.php:40
+msgid "Не указана запись."
+msgstr ""
+
+#: includes/class-ajax.php:44
+msgid "Не выбран целевой сайт."
+msgstr ""
+
+#: includes/class-ajax.php:66
+msgid "Нет доступа к записи."
+msgstr ""
+
+#: includes/class-copier.php:22
+msgid "Запись-источник не найдена."
+msgstr ""
+
+#: includes/class-copier.php:26
+msgid "Этот тип записи нельзя копировать."
+msgstr ""
+
+#: includes/class-copier.php:30
+msgid "Тип записи не включён в настройках Copy Post."
+msgstr ""
+
+#: includes/class-copier.php:34
+msgid "Запись в корзине или ещё не создана — копировать нельзя."
+msgstr ""
+
+#: includes/class-copier.php:38
+msgid "Недостаточно прав для копирования этой записи."
+msgstr ""
+
+#: includes/class-copier.php:44
+msgid "Не выбран ни один целевой сайт."
+msgstr ""
+
+#: includes/class-copier.php:56
+msgid "Нельзя копировать запись на тот же сайт."
+msgstr ""
+
+#: includes/class-copier.php:65
+msgid "Нет доступа к целевому сайту."
+msgstr ""
+
+#. translators: 1: post type, 2: site name.
+#: includes/class-copier.php:247
+#, php-format
+msgid "Тип записи «%1$s» не зарегистрирован на сайте «%2$s»."
+msgstr ""
+
+#: includes/class-copier.php:279
+msgid "Нет прав на обновление существующей копии."
+msgstr ""
+
+#: includes/class-copier.php:316
+msgid "Недостаточно прав для публикации — копия сохранена как черновик."
+msgstr ""
+
+#: includes/class-copier.php:327
+msgid "Автор не является участником целевого сайта — использован текущий пользователь."
+msgstr ""
+
+#: includes/class-copier.php:345
+msgid "Нет прав на редактирование чужих записей — автором копии назначен текущий пользователь."
+msgstr ""
+
+#: includes/class-copier.php:358
+msgid "Родительская запись не скопирована — копия создана на верхнем уровне."
+msgstr ""
+
+#. translators: %s: template name.
+#: includes/class-copier.php:372
+#, php-format
+msgid "Шаблон страницы «%s» отсутствует в теме целевого сайта."
+msgstr ""
+
+#: includes/class-copier.php:423
+msgid "неизвестная ошибка вставки"
+msgstr ""
+
+#. translators: %s: error message.
+#: includes/class-copier.php:429
+#, php-format
+msgid "Не удалось создать копию: %s"
+msgstr ""
+
+#. translators: %s: post format.
+#: includes/class-copier.php:466
+#, php-format
+msgid "Формат записи «%s» не поддерживается темой целевого сайта."
+msgstr ""
+
+#. translators: %s: taxonomy name.
+#: includes/class-copier.php:597
+#, php-format
+msgid "Таксономия «%s» не зарегистрирована на целевом сайте."
+msgstr ""
+
+#. translators: 1: term name, 2: error message.
+#: includes/class-copier.php:618
+#, php-format
+msgid "Не удалось создать термин «%1$s»: %2$s"
+msgstr ""
+
+#. translators: 1: taxonomy name, 2: error message.
+#: includes/class-copier.php:672
+#, php-format
+msgid "Не удалось назначить таксономию «%1$s»: %2$s"
+msgstr ""
+
+#. translators: %s: attachment title.
+#: includes/class-media.php:156
+#, php-format
+msgid "Не удалось прочитать файл «%s»."
+msgstr ""
+
+#. translators: 1: attachment title, 2: error message.
+#: includes/class-media.php:174
+#, php-format
+msgid "Не удалось скопировать файл «%1$s»: %2$s"
+msgstr ""
+
+#: includes/class-media.php:203
+msgid "неизвестная ошибка"
+msgstr ""
+
+#. translators: 1: attachment title, 2: error message.
+#: includes/class-media.php:206
+#, php-format
+msgid "Не удалось создать вложение «%1$s»: %2$s"
+msgstr ""
+
+#: includes/class-media.php:299
+msgid "не удалось записать файл в uploads"
+msgstr ""
+
+#: includes/class-plugin.php:73
+msgid "Плагин Copy Post работает только в сети WordPress Multisite."
+msgstr ""
+
+#: includes/class-settings.php:162
+msgid "Недостаточно прав для изменения настроек."
+msgstr ""
+
+#: includes/class-settings.php:288
+msgid "Редактор и выше (edit_posts)"
+msgstr ""
+
+#: includes/class-settings.php:289
+msgid "Редактор чужих записей (edit_others_posts)"
+msgstr ""
+
+#: includes/class-settings.php:290
+msgid "Публикация записей (publish_posts)"
+msgstr ""
+
+#: includes/class-settings.php:291
+msgid "Администратор сайта (manage_options)"
+msgstr ""
+
+#: includes/class-settings.php:296
+msgid "Настройки плагина Copy Post для всей сети. Отдельные сайты могут запускать копирование из раздела «Инструменты → Копирование записей»."
+msgstr ""
+
+#: includes/class-settings.php:300
+msgid "Настройки сохранены."
+msgstr ""
+
+#: includes/class-settings.php:308
+msgid "Типы записей"
+msgstr ""
+
+#: includes/class-settings.php:309
+msgid "Для выбранных типов в списках появляются действия копирования."
+msgstr ""
+
+#: includes/class-settings.php:312
+msgid "Доступные типы"
+msgstr ""
+
+#: includes/class-settings.php:330
+msgid "Что копировать по умолчанию"
+msgstr ""
+
+#: includes/class-settings.php:333
+msgid "Данные"
+msgstr ""
+
+#: includes/class-settings.php:337
+#: templates/copy-panel.php:75
+msgid "Таксономии (категории, метки, произвольные)"
+msgstr ""
+
+#: includes/class-settings.php:338
+#: templates/copy-panel.php:76
+msgid "Произвольные поля (мета)"
+msgstr ""
+
+#: includes/class-settings.php:339
+#: templates/copy-panel.php:77
+msgid "Медиа: миниатюра и файлы из контента/меты"
+msgstr ""
+
+#: includes/class-settings.php:340
+#: templates/copy-panel.php:82
+msgid "Комментарии (только при создании копии)"
+msgstr ""
+
+#: includes/class-settings.php:341
+#: templates/copy-panel.php:78
+msgid "Дата и время публикации"
+msgstr ""
+
+#: includes/class-settings.php:342
+msgid "Автор (с проверкой участия в целевом сайте)"
+msgstr ""
+
+#: includes/class-settings.php:343
+#: templates/copy-panel.php:80
+msgid "Закрепление записи (sticky)"
+msgstr ""
+
+#: includes/class-settings.php:344
+msgid "Переписывать ссылки исходного сайта на целевой"
+msgstr ""
+
+#: includes/class-settings.php:351
+#: templates/copy-panel.php:88
+msgid "Поведение"
+msgstr ""
+
+#: includes/class-settings.php:354
+#: templates/copy-panel.php:106
+msgid "Статус копии"
+msgstr ""
+
+#: includes/class-settings.php:357
+#: templates/copy-panel.php:109
+msgid "Черновик"
+msgstr ""
+
+#: includes/class-settings.php:358
+#: templates/copy-panel.php:112
+msgid "Как у оригинала"
+msgstr ""
+
+#: includes/class-settings.php:363
+#: templates/copy-panel.php:91
+msgid "Если копия уже есть"
+msgstr ""
+
+#: includes/class-settings.php:366
+msgid "Создавать новую"
+msgstr ""
+
+#: includes/class-settings.php:367
+msgid "Обновлять существующую"
+msgstr ""
+
+#: includes/class-settings.php:368
+msgid "Пропускать"
+msgstr ""
+
+#: includes/class-settings.php:370
+msgid "Значение по умолчанию; в окне копирования его можно изменить."
+msgstr ""
+
+#: includes/class-settings.php:374
+msgid "Слаг при обновлении"
+msgstr ""
+
+#: includes/class-settings.php:378
+msgid "Обновлять слаг копии при изменении слага источника"
+msgstr ""
+
+#: includes/class-settings.php:380
+msgid "По умолчанию слаг копии сохраняется, чтобы не ломать ссылки."
+msgstr ""
+
+#: includes/class-settings.php:384
+msgid "Защищённая мета"
+msgstr ""
+
+#: includes/class-settings.php:388
+msgid "Не копировать мета-поля, начинающиеся с «_»"
+msgstr ""
+
+#: includes/class-settings.php:390
+msgid "Поля медиа и миниатюра обрабатываются отдельно и не теряются."
+msgstr ""
+
+#: includes/class-settings.php:394
+msgid "Кому доступно"
+msgstr ""
+
+#: includes/class-settings.php:403
+msgid "Дополнительно пользователь должен иметь право редактировать конкретную запись и быть участником целевого сайта (кроме супер-админа)."
+msgstr ""
+
+#: includes/class-settings.php:408
+msgid "Исключаемые мета-поля"
+msgstr ""
+
+#: includes/class-settings.php:411
+msgid "Ключи"
+msgstr ""
+
+#: includes/class-settings.php:417
+msgid "По одному ключу в строке. Можно указать шаблон с «*» в конце, например: _elementor_*"
+msgstr ""
+
+#: includes/class-settings.php:422
+msgid "Удаление"
+msgstr ""
+
+#: includes/class-settings.php:425
+msgid "Данные плагина"
+msgstr ""
+
+#: includes/class-settings.php:429
+msgid "Удалять служебную мету связей копий при удалении плагина"
+msgstr ""
+
+#: includes/class-settings.php:431
+msgid "Сами записи, страницы и медиафайлы не удаляются никогда."
+msgstr ""
+
+#: includes/class-settings.php:436
+msgid "Сохранить настройки"
+msgstr ""
+
+#: templates/copy-panel.php:37
+msgid "Целевые сайты"
+msgstr ""
+
+#: templates/copy-panel.php:40
+msgid "Нет доступных целевых сайтов. Проверьте, что вы участник других сайтов сети и имеете право редактировать записи."
+msgstr ""
+
+#: templates/copy-panel.php:45
+msgid "Выбрать все"
+msgstr ""
+
+#: templates/copy-panel.php:51
+msgid "Поиск сайта…"
+msgstr ""
+
+#: templates/copy-panel.php:52
+msgid "Поиск сайта"
+msgstr ""
+
+#: templates/copy-panel.php:72
+msgid "Что копировать"
+msgstr ""
+
+#: templates/copy-panel.php:79
+msgid "Автор"
+msgstr ""
+
+#: templates/copy-panel.php:81
+msgid "Переписывать ссылки исходного сайта"
+msgstr ""
+
+#: templates/copy-panel.php:94
+msgid "Создать новую"
+msgstr ""
+
+#: templates/copy-panel.php:97
+msgid "Обновить существующую"
+msgstr ""
+
+#: templates/copy-panel.php:100
+msgid "Пропустить"
+msgstr ""
+
+#: templates/copy-panel.php:115
+msgid "Опубликовать"
+msgstr ""
+
+#: templates/copy-panel.php:121
+msgid "Выбрано записей:"
+msgstr ""
+
+#: templates/copy-panel.php:131
+msgid "Копировать"
+msgstr ""
+
+#: templates/copy-panel.php:157
+msgid "Запись"
+msgstr ""
+
+#: templates/copy-panel.php:158
+msgid "Сайт"
+msgstr ""
+
+#: templates/copy-panel.php:159
+msgid "Результат"
+msgstr ""
