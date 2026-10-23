@@ -126,6 +126,71 @@ class Copier
             ? $duplicate
             : (string) Settings::get('duplicate_action', 'new');
 
+        $modes = [];
+
+        if (isset($options['taxonomy_modes']) && is_array($options['taxonomy_modes'])) {
+            foreach ($options['taxonomy_modes'] as $target_id => $mode) {
+                $target_id = absint($target_id);
+                $mode = is_string($mode) ? sanitize_key($mode) : '';
+
+                if ($target_id > 0 && in_array($mode, ['copy', 'manual', 'none'], true)) {
+                    $modes[$target_id] = $mode;
+                }
+            }
+        }
+
+        $out['taxonomy_modes'] = $modes;
+
+        $terms = [];
+
+        if (isset($options['taxonomy_terms']) && is_array($options['taxonomy_terms'])) {
+            foreach ($options['taxonomy_terms'] as $target_id => $taxonomy_terms) {
+                $target_id = absint($target_id);
+
+                if ($target_id <= 0 || !is_array($taxonomy_terms)) {
+                    continue;
+                }
+
+                foreach ($taxonomy_terms as $taxonomy => $term_ids) {
+                    if (!is_string($taxonomy) || !is_array($term_ids)) {
+                        continue;
+                    }
+
+                    $taxonomy = sanitize_key($taxonomy);
+
+                    if ($taxonomy === '') {
+                        continue;
+                    }
+
+                    $ids = [];
+
+                    foreach ($term_ids as $term_id) {
+                        if (is_numeric($term_id)) {
+                            $ids[] = absint($term_id);
+                        }
+                    }
+
+                    $terms[$target_id][$taxonomy] = array_values(array_unique(array_filter($ids)));
+                }
+            }
+        }
+
+        $out['taxonomy_terms'] = $terms;
+
+        $clear = [];
+
+        if (isset($options['taxonomy_clear_unselected']) && is_array($options['taxonomy_clear_unselected'])) {
+            foreach ($options['taxonomy_clear_unselected'] as $target_id => $value) {
+                $target_id = absint($target_id);
+
+                if ($target_id > 0) {
+                    $clear[$target_id] = empty($value) ? 0 : 1;
+                }
+            }
+        }
+
+        $out['taxonomy_clear_unselected'] = $clear;
+
         return $out;
     }
 
@@ -434,7 +499,12 @@ class Copier
 
             $new_id = (int) $new_id;
 
-            if (!empty($options['copy_taxonomies'])) {
+            $taxonomy_mode = $options['taxonomy_modes'][$target_id]
+                ?? (empty($options['copy_taxonomies']) ? 'none' : 'copy');
+
+            if ($taxonomy_mode === 'manual') {
+                self::set_manual_terms($payload, $new_id, $target_id, $options, $warnings);
+            } elseif ($taxonomy_mode === 'copy') {
                 self::copy_terms($payload, $new_id, $warnings);
             }
 
@@ -676,6 +746,96 @@ class Copier
                     $taxonomy,
                     $set_result->get_error_message()
                 );
+            }
+        }
+    }
+
+    /**
+     * Назначает термины, выбранные на целевом сайте.
+     *
+     * @param array<string, mixed> $payload
+     * @param array<string, mixed> $options
+     * @param string[] $warnings
+     */
+    private static function set_manual_terms(
+        array $payload,
+        int $new_id,
+        int $target_id,
+        array $options,
+        array &$warnings
+    ): void {
+        $terms_by_taxonomy = $options['taxonomy_terms'][$target_id] ?? [];
+        $clear_unselected = !empty($options['taxonomy_clear_unselected'][$target_id]);
+        $registered = get_object_taxonomies((string) $payload['post_type'], 'objects');
+
+        if (!is_array($terms_by_taxonomy)) {
+            return;
+        }
+
+        foreach ($terms_by_taxonomy as $taxonomy => $term_ids) {
+            $taxonomy = (string) $taxonomy;
+
+            if ($taxonomy === 'post_format') {
+                continue;
+            }
+
+            if (!isset($registered[$taxonomy]) || !taxonomy_exists($taxonomy)) {
+                $warnings[] = sprintf(
+                    /* translators: %s: taxonomy name. */
+                    __('Таксономия «%s» не зарегистрирована на целевом сайте.', 'copy-post'),
+                    $taxonomy
+                );
+                continue;
+            }
+
+            $valid = [];
+
+            foreach ((array) $term_ids as $term_id) {
+                $term = get_term((int) $term_id, $taxonomy);
+
+                if ($term instanceof \WP_Term && $term->taxonomy === $taxonomy) {
+                    $valid[] = (int) $term->term_id;
+                } else {
+                    $warnings[] = sprintf(
+                        /* translators: 1: term ID, 2: taxonomy name. */
+                        __('Термин #%1$d не найден в таксономии «%2$s» на целевом сайте.', 'copy-post'),
+                        (int) $term_id,
+                        $taxonomy
+                    );
+                }
+            }
+
+            $valid = array_values(array_unique($valid));
+
+            if ($valid !== []) {
+                $set_result = wp_set_object_terms($new_id, $valid, $taxonomy, false);
+
+                if (is_wp_error($set_result)) {
+                    $warnings[] = sprintf(
+                        /* translators: 1: taxonomy name, 2: error message. */
+                        __('Не удалось назначить таксономию «%1$s»: %2$s', 'copy-post'),
+                        $taxonomy,
+                        $set_result->get_error_message()
+                    );
+                }
+
+                continue;
+            }
+
+            if (!$clear_unselected) {
+                continue;
+            }
+
+            if ($taxonomy === 'category') {
+                $default_category = (int) get_option('default_category');
+
+                if ($default_category > 0) {
+                    wp_set_object_terms($new_id, [$default_category], 'category', false);
+                } else {
+                    wp_set_object_terms($new_id, [], 'category', false);
+                }
+            } else {
+                wp_set_object_terms($new_id, [], $taxonomy, false);
             }
         }
     }

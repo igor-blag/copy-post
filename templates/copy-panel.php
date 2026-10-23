@@ -6,6 +6,7 @@
  * @var array<string, mixed> $settings
  * @var int[] $post_ids
  * @var string $mode
+ * @var string $post_type
  */
 
 defined('ABSPATH') || exit;
@@ -14,6 +15,7 @@ $mode = isset($mode) && $mode === 'modal' ? 'modal' : 'page';
 $targets = isset($targets) && is_array($targets) ? $targets : [];
 $settings = isset($settings) && is_array($settings) ? $settings : [];
 $post_ids = isset($post_ids) && is_array($post_ids) ? array_values(array_filter(array_map('absint', $post_ids))) : [];
+$post_type = isset($post_type) ? (string) $post_type : '';
 $post_ids_value = implode(',', $post_ids);
 $unique_id = wp_unique_id('copy-post-');
 
@@ -29,7 +31,7 @@ $checkbox = static function (string $name, string $label, bool $checked): void {
     <?php
 };
 ?>
-<div class="copy-post-panel" data-post-ids="<?php echo esc_attr($post_ids_value); ?>">
+<div class="copy-post-panel" data-post-ids="<?php echo esc_attr($post_ids_value); ?>" data-post-type="<?php echo esc_attr($post_type); ?>">
     <input type="hidden" class="copy-post-post-ids" name="copy_post_ids" value="<?php echo esc_attr($post_ids_value); ?>">
 
     <div class="copy-post-panel__grid">
@@ -72,7 +74,6 @@ $checkbox = static function (string $name, string $label, bool $checked): void {
             <h3><?php echo esc_html__('Что копировать', 'copy-post'); ?></h3>
             <div class="copy-post-options">
                 <?php
-                $checkbox('copy_taxonomies', __('Таксономии (категории, метки, произвольные)', 'copy-post'), !empty($settings['copy_taxonomies']));
                 $checkbox('copy_meta', __('Произвольные поля (мета)', 'copy-post'), !empty($settings['copy_meta']));
                 $checkbox('copy_media', __('Медиа: миниатюра и файлы из контента/меты', 'copy-post'), !empty($settings['copy_media']));
                 $checkbox('copy_dates', __('Дата и время публикации', 'copy-post'), !empty($settings['copy_dates']));
@@ -123,6 +124,15 @@ $checkbox = static function (string $name, string $label, bool $checked): void {
             </p>
         </section>
     </div>
+
+    <section class="copy-post-panel__section copy-post-taxonomy-section">
+        <h3><?php echo esc_html__('Таксономии на целевых сайтах', 'copy-post'); ?></h3>
+        <p class="description">
+            <?php echo esc_html__('Для каждого выбранного сайта можно скопировать таксономии с источника, выбрать существующие термины на целевом сайте или не копировать их. Ручной выбор отменяет копирование таксономий с источника для этого сайта.', 'copy-post'); ?>
+        </p>
+        <div class="copy-post-taxonomy-targets"></div>
+        <p class="copy-post-taxonomy-empty"><?php echo esc_html__('Выберите целевой сайт, чтобы настроить таксономии.', 'copy-post'); ?></p>
+    </section>
 
     <p class="copy-post-message" role="alert"></p>
 

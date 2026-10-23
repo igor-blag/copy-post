@@ -77,7 +77,6 @@
 
     function getOptions(panel) {
         var keys = [
-            'copy_taxonomies',
             'copy_meta',
             'copy_media',
             'copy_dates',
@@ -99,8 +98,402 @@
         options.status = status ? status.value : (data.settings.default_status || 'draft');
         options.duplicate = duplicate ? duplicate.value : (data.settings.duplicate_action || 'new');
         options.update_slug = toBool(data.settings && data.settings.update_slug);
+        options.taxonomy_modes = {};
+        options.taxonomy_terms = {};
+        options.taxonomy_clear_unselected = {};
+
+        qsa('.copy-post-taxonomy-target', panel).forEach(function (block) {
+            var targetId = parseInt(block.dataset.targetId || '0', 10);
+
+            if (!targetId) {
+                return;
+            }
+
+            var modeInput = qs('.copy-post-taxonomy-mode:checked', block);
+            var mode = modeInput ? modeInput.value : 'copy';
+            options.taxonomy_modes[targetId] = mode;
+
+            if (mode !== 'manual') {
+                return;
+            }
+
+            var clearInput = qs('.copy-post-taxonomy-clear', block);
+            options.taxonomy_clear_unselected[targetId] = clearInput && clearInput.checked ? 1 : 0;
+            var terms = {};
+
+            qsa('.copy-post-taxonomy', block).forEach(function (taxonomyBlock) {
+                var taxonomy = taxonomyBlock.dataset.taxonomy || '';
+
+                if (!taxonomy) {
+                    return;
+                }
+
+                terms[taxonomy] = qsa('.copy-post-term-select option:checked', taxonomyBlock)
+                    .map(function (option) {
+                        return parseInt(option.value, 10);
+                    })
+                    .filter(function (id) {
+                        return !isNaN(id) && id > 0;
+                    });
+            });
+
+            options.taxonomy_terms[targetId] = terms;
+        });
 
         return options;
+    }
+
+    function getSiteData(targetId) {
+        var sites = data.sites || [];
+
+        for (var i = 0; i < sites.length; i++) {
+            if (parseInt(sites[i].blog_id, 10) === targetId) {
+                return sites[i];
+            }
+        }
+
+        return { blog_id: targetId, name: '#' + targetId, url: '' };
+    }
+
+    function showTaxonomyMessage(block, message, isError) {
+        var element = qs('.copy-post-taxonomy-message', block);
+
+        if (!element) {
+            return;
+        }
+
+        element.textContent = message || '';
+        element.classList.toggle('is-error', Boolean(isError));
+    }
+
+    function createTaxonomyBlock(panel, targetId) {
+        var site = getSiteData(targetId);
+        var block = document.createElement('div');
+        block.className = 'copy-post-taxonomy-target';
+        block.dataset.targetId = String(targetId);
+
+        var header = document.createElement('div');
+        header.className = 'copy-post-taxonomy-target__header';
+        var name = document.createElement('strong');
+        name.textContent = site.name || '#' + targetId;
+        header.appendChild(name);
+
+        if (site.url) {
+            var url = document.createElement('span');
+            url.className = 'copy-post-taxonomy-target__url';
+            url.textContent = site.url;
+            header.appendChild(url);
+        }
+
+        block.appendChild(header);
+
+        var modes = document.createElement('div');
+        modes.className = 'copy-post-taxonomy-target__modes';
+        var defaultMode = toBool(data.settings && data.settings.copy_taxonomies) ? 'copy' : 'none';
+        var modeLabels = {
+            copy: strings.taxonomyCopy || 'Копировать с источника',
+            manual: strings.taxonomyManual || 'Выбрать на сайте',
+            none: strings.taxonomyNone || 'Не копировать'
+        };
+
+        Object.keys(modeLabels).forEach(function (value) {
+            var label = document.createElement('label');
+            label.className = 'copy-post-option';
+            var input = document.createElement('input');
+            input.type = 'radio';
+            input.name = 'copy_post_taxonomy_mode_' + targetId;
+            input.value = value;
+            input.className = 'copy-post-taxonomy-mode';
+            input.checked = value === defaultMode;
+            var text = document.createElement('span');
+            text.textContent = modeLabels[value];
+            label.appendChild(input);
+            label.appendChild(text);
+            modes.appendChild(label);
+        });
+
+        block.appendChild(modes);
+
+        var manual = document.createElement('div');
+        manual.className = 'copy-post-taxonomy-manual';
+        manual.hidden = true;
+
+        var clearLabel = document.createElement('label');
+        clearLabel.className = 'copy-post-option copy-post-taxonomy-clear-label';
+        var clearInput = document.createElement('input');
+        clearInput.type = 'checkbox';
+        clearInput.className = 'copy-post-taxonomy-clear';
+        clearInput.checked = true;
+        var clearText = document.createElement('span');
+        clearText.textContent = strings.taxonomyClear || 'Очищать невыбранные таксономии на этом сайте';
+        clearLabel.appendChild(clearInput);
+        clearLabel.appendChild(clearText);
+        manual.appendChild(clearLabel);
+
+        var clearHelp = document.createElement('p');
+        clearHelp.className = 'description';
+        clearHelp.textContent = strings.taxonomyClearHelp || 'Если снять, таксономии без выбора останутся как на целевом сайте.';
+        manual.appendChild(clearHelp);
+
+        var list = document.createElement('div');
+        list.className = 'copy-post-taxonomy-list';
+        manual.appendChild(list);
+
+        var message = document.createElement('p');
+        message.className = 'copy-post-taxonomy-message';
+        manual.appendChild(message);
+
+        block.appendChild(manual);
+        block.dataset.loaded = '';
+
+        return block;
+    }
+
+    function ensureTaxonomyBlocks(panel) {
+        var container = qs('.copy-post-taxonomy-targets', panel);
+
+        if (!container) {
+            return;
+        }
+
+        var selected = getTargets(panel);
+        var existing = qsa('.copy-post-taxonomy-target', container);
+
+        existing.forEach(function (block) {
+            var targetId = parseInt(block.dataset.targetId || '0', 10);
+
+            if (selected.indexOf(targetId) === -1) {
+                block.remove();
+            }
+        });
+
+        selected.forEach(function (targetId) {
+            if (!qs('.copy-post-taxonomy-target[data-target-id="' + targetId + '"]', container)) {
+                container.appendChild(createTaxonomyBlock(panel, targetId));
+            }
+        });
+
+        var empty = qs('.copy-post-taxonomy-empty', panel);
+
+        if (empty) {
+            empty.hidden = selected.length > 0;
+        }
+    }
+
+    function loadTaxonomies(panel, block, targetId, force, selectedExtra) {
+        if (!panel._taxonomies) {
+            panel._taxonomies = {};
+        }
+
+        if (!force && panel._taxonomies[targetId]) {
+            block.dataset.loaded = '1';
+            renderTaxonomies(block, panel._taxonomies[targetId], selectedExtra);
+            return Promise.resolve();
+        }
+
+        showTaxonomyMessage(block, strings.taxonomyLoading || 'Загрузка таксономий…', false);
+
+        return request('copy_post_terms', {
+            target_id: targetId,
+            post_type: panel.dataset.postType || ''
+        }).then(function (result) {
+            panel._taxonomies[targetId] = result && result.taxonomies ? result.taxonomies : [];
+            block.dataset.loaded = '1';
+            showTaxonomyMessage(block, '', false);
+            renderTaxonomies(block, panel._taxonomies[targetId], selectedExtra);
+        }).catch(function (error) {
+            block.dataset.loaded = '';
+            showTaxonomyMessage(block, error.message || strings.taxonomyError || 'Не удалось загрузить таксономии.', true);
+        });
+    }
+
+    function renderTaxonomies(block, taxonomies, selectedExtra) {
+        var list = qs('.copy-post-taxonomy-list', block);
+
+        if (!list) {
+            return;
+        }
+
+        var selected = new Set();
+
+        qsa('.copy-post-term-select option:checked', list).forEach(function (option) {
+            selected.add(parseInt(option.value, 10));
+        });
+
+        if (selectedExtra && selectedExtra.forEach) {
+            selectedExtra.forEach(function (id) {
+                selected.add(parseInt(id, 10));
+            });
+        }
+
+        list.innerHTML = '';
+
+        if (!taxonomies || taxonomies.length === 0) {
+            var empty = document.createElement('p');
+            empty.className = 'copy-post-taxonomy-note';
+            empty.textContent = strings.taxonomyEmpty || 'У этого типа записи на целевом сайте нет таксономий.';
+            list.appendChild(empty);
+            return;
+        }
+
+        taxonomies.forEach(function (taxonomy) {
+            renderTaxonomyBlock(list, taxonomy, selected);
+        });
+    }
+
+    function renderTaxonomyBlock(list, taxonomy, selected) {
+        var wrap = document.createElement('div');
+        wrap.className = 'copy-post-taxonomy';
+        wrap.dataset.taxonomy = taxonomy.name;
+
+        var label = document.createElement('label');
+        label.className = 'copy-post-taxonomy__label';
+        label.textContent = taxonomy.label;
+        wrap.appendChild(label);
+
+        var search = document.createElement('input');
+        search.type = 'search';
+        search.className = 'copy-post-term-search';
+        search.placeholder = strings.taxonomySearch || 'Поиск терминов…';
+        search.setAttribute('aria-label', strings.taxonomySearch || 'Поиск терминов');
+        wrap.appendChild(search);
+
+        var select = document.createElement('select');
+        select.className = 'copy-post-term-select';
+        select.multiple = true;
+        select.size = 7;
+
+        (taxonomy.terms || []).forEach(function (term) {
+            var option = document.createElement('option');
+            option.value = String(term.id);
+            option.textContent = (term.depth > 0 ? '— '.repeat(term.depth) : '') + term.name;
+            option.selected = selected.has(parseInt(term.id, 10));
+            select.appendChild(option);
+        });
+
+        wrap.appendChild(select);
+
+        if (!taxonomy.terms || taxonomy.terms.length === 0) {
+            var noTerms = document.createElement('p');
+            noTerms.className = 'copy-post-taxonomy-note';
+            noTerms.textContent = strings.taxonomyNoTerms || 'Терминов пока нет.';
+            wrap.appendChild(noTerms);
+        }
+
+        if (taxonomy.can_create) {
+            wrap.appendChild(createTermRow(taxonomy, false));
+        }
+
+        list.appendChild(wrap);
+    }
+
+    function createTermRow(taxonomy, isParent) {
+        var row = document.createElement('div');
+        row.className = 'copy-post-term-create';
+
+        if (isParent) {
+            return row;
+        }
+
+        if (taxonomy.hierarchical) {
+            var parent = document.createElement('select');
+            parent.className = 'copy-post-new-term-parent';
+            parent.setAttribute('aria-label', strings.taxonomyParent || 'Родительский термин');
+            var top = document.createElement('option');
+            top.value = '0';
+            top.textContent = strings.taxonomyTopLevel || '— верхний уровень —';
+            parent.appendChild(top);
+
+            (taxonomy.terms || []).forEach(function (term) {
+                var option = document.createElement('option');
+                option.value = String(term.id);
+                option.textContent = (term.depth > 0 ? '— '.repeat(term.depth) : '') + term.name;
+                parent.appendChild(option);
+            });
+
+            row.appendChild(parent);
+        }
+
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'copy-post-new-term';
+        input.placeholder = strings.taxonomyNewTerm || 'Название нового термина';
+        input.setAttribute('aria-label', strings.taxonomyNewTerm || 'Название нового термина');
+        row.appendChild(input);
+
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'button button-small copy-post-create-term';
+        button.textContent = strings.taxonomyCreate || 'Создать';
+        row.appendChild(button);
+
+        return row;
+    }
+
+    function filterTerms(taxonomyBlock, term) {
+        term = (term || '').toLowerCase().trim();
+
+        qsa('.copy-post-term-select option', taxonomyBlock).forEach(function (option) {
+            var text = (option.textContent || '').toLowerCase();
+            option.hidden = term !== '' && text.indexOf(term) === -1;
+        });
+    }
+
+    function createTerm(button) {
+        var taxonomyBlock = button.closest('.copy-post-taxonomy');
+        var targetBlock = button.closest('.copy-post-taxonomy-target');
+        var panel = getPanel(button);
+
+        if (!taxonomyBlock || !targetBlock || !panel) {
+            return;
+        }
+
+        var targetId = parseInt(targetBlock.dataset.targetId || '0', 10);
+        var taxonomy = taxonomyBlock.dataset.taxonomy || '';
+        var input = qs('.copy-post-new-term', taxonomyBlock);
+        var parentSelect = qs('.copy-post-new-term-parent', taxonomyBlock);
+        var name = input ? input.value.trim() : '';
+
+        if (!targetId || !taxonomy || name === '') {
+            return;
+        }
+
+        var parent = parentSelect ? parseInt(parentSelect.value, 10) || 0 : 0;
+        var select = qs('.copy-post-term-select', taxonomyBlock);
+        var selected = new Set();
+
+        if (select) {
+            Array.prototype.forEach.call(select.selectedOptions, function (option) {
+                selected.add(parseInt(option.value, 10));
+            });
+        }
+
+        button.disabled = true;
+        showTaxonomyMessage(targetBlock, strings.taxonomyLoading || 'Загрузка таксономий…', false);
+
+        request('copy_post_create_term', {
+            target_id: targetId,
+            taxonomy: taxonomy,
+            name: name,
+            parent: parent,
+            post_type: panel.dataset.postType || ''
+        }).then(function (result) {
+            if (input) {
+                input.value = '';
+            }
+
+            if (result && result.term && result.term.id) {
+                selected.add(parseInt(result.term.id, 10));
+            }
+
+            return loadTaxonomies(panel, targetBlock, targetId, true, selected).then(function () {
+                showTaxonomyMessage(targetBlock, strings.taxonomyCreated || 'Термин добавлен в список.', false);
+            });
+        }).catch(function (error) {
+            showTaxonomyMessage(targetBlock, error.message || strings.error || 'Ошибка', true);
+        }).then(function () {
+            button.disabled = false;
+        });
     }
 
     function setMessage(panel, message) {
@@ -191,7 +584,6 @@
 
         var defaults = data.settings || {};
         var optionKeys = [
-            'copy_taxonomies',
             'copy_meta',
             'copy_media',
             'copy_dates',
@@ -232,6 +624,20 @@
         clearResults(panel);
         setProgress(panel, 0, 0, '');
         setRunning(panel, false);
+
+        var taxonomyTargets = qs('.copy-post-taxonomy-targets', panel);
+
+        if (taxonomyTargets) {
+            taxonomyTargets.innerHTML = '';
+        }
+
+        panel._taxonomies = {};
+        var taxonomyEmpty = qs('.copy-post-taxonomy-empty', panel);
+
+        if (taxonomyEmpty) {
+            taxonomyEmpty.hidden = false;
+        }
+
         updateCount(panel);
     }
 
@@ -657,6 +1063,20 @@
             return;
         }
 
+        ensureTaxonomyBlocks(panel);
+
+        var manualBlocks = qsa('.copy-post-taxonomy-target', panel).filter(function (block) {
+            var mode = qs('.copy-post-taxonomy-mode:checked', block);
+            return mode && mode.value === 'manual';
+        });
+
+        for (var i = 0; i < manualBlocks.length; i++) {
+            if (manualBlocks[i].dataset.loaded !== '1') {
+                setMessage(panel, strings.taxonomyNotLoaded || 'Дождитесь загрузки таксономий для выбранных сайтов.');
+                return;
+            }
+        }
+
         var items = postIds.map(function (postId) {
             return { postId: postId, targetIds: targets.slice() };
         });
@@ -773,6 +1193,14 @@
                 return;
             }
 
+            var createTermButton = event.target.closest('.copy-post-create-term');
+
+            if (createTermButton) {
+                event.preventDefault();
+                createTerm(createTermButton);
+                return;
+            }
+
             var retry = event.target.closest('.copy-post-retry');
 
             if (retry) {
@@ -798,6 +1226,7 @@
                 });
 
                 syncSelectAll(panel);
+                ensureTaxonomyBlocks(panel);
                 return;
             }
 
@@ -806,6 +1235,36 @@
 
                 if (targetPanel) {
                     syncSelectAll(targetPanel);
+                    ensureTaxonomyBlocks(targetPanel);
+                }
+
+                return;
+            }
+
+            if (event.target.matches('.copy-post-taxonomy-mode')) {
+                var taxonomyBlock = event.target.closest('.copy-post-taxonomy-target');
+                var taxonomyPanel = getPanel(event.target);
+
+                if (!taxonomyBlock || !taxonomyPanel) {
+                    return;
+                }
+
+                var manualContainer = qs('.copy-post-taxonomy-manual', taxonomyBlock);
+
+                if (!manualContainer) {
+                    return;
+                }
+
+                if (event.target.value === 'manual') {
+                    manualContainer.hidden = false;
+                    loadTaxonomies(
+                        taxonomyPanel,
+                        taxonomyBlock,
+                        parseInt(taxonomyBlock.dataset.targetId || '0', 10),
+                        false
+                    );
+                } else {
+                    manualContainer.hidden = true;
                 }
 
                 return;
@@ -836,6 +1295,16 @@
                 if (panel) {
                     filterSites(panel, event.target.value);
                 }
+
+                return;
+            }
+
+            if (event.target.matches('.copy-post-term-search')) {
+                var taxonomyBlock = event.target.closest('.copy-post-taxonomy');
+
+                if (taxonomyBlock) {
+                    filterTerms(taxonomyBlock, event.target.value);
+                }
             }
         });
 
@@ -865,6 +1334,7 @@
         qsa('.copy-post-panel').forEach(function (panel) {
             updateCount(panel);
             syncSelectAll(panel);
+            ensureTaxonomyBlocks(panel);
         });
 
         syncPageSelection();

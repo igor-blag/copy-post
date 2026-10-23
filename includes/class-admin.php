@@ -124,6 +124,22 @@ class Admin
                 'stopped' => __('Остановлено', 'copy-post'),
                 /* translators: 1: created count, 2: updated count, 3: skipped count, 4: error count. */
                 'summary' => __('Создано: %1$d, обновлено: %2$d, пропущено: %3$d, ошибок: %4$d', 'copy-post'),
+                'taxonomyLoading' => __('Загрузка таксономий…', 'copy-post'),
+                'taxonomyError' => __('Не удалось загрузить таксономии.', 'copy-post'),
+                'taxonomyEmpty' => __('У этого типа записи на целевом сайте нет таксономий.', 'copy-post'),
+                'taxonomyNoTerms' => __('Терминов пока нет.', 'copy-post'),
+                'taxonomySearch' => __('Поиск терминов…', 'copy-post'),
+                'taxonomyCreate' => __('Создать', 'copy-post'),
+                'taxonomyNewTerm' => __('Название нового термина', 'copy-post'),
+                'taxonomyParent' => __('Родительский термин', 'copy-post'),
+                'taxonomyTopLevel' => __('— верхний уровень —', 'copy-post'),
+                'taxonomyClear' => __('Очищать невыбранные таксономии на этом сайте', 'copy-post'),
+                'taxonomyClearHelp' => __('Если снять, таксономии без выбора останутся как на целевом сайте.', 'copy-post'),
+                'taxonomyCopy' => __('Копировать с источника', 'copy-post'),
+                'taxonomyManual' => __('Выбрать на сайте', 'copy-post'),
+                'taxonomyNone' => __('Не копировать', 'copy-post'),
+                'taxonomyCreated' => __('Термин добавлен в список.', 'copy-post'),
+                'taxonomyNotLoaded' => __('Дождитесь загрузки таксономий для выбранных сайтов.', 'copy-post'),
             ],
         ]);
     }
@@ -422,7 +438,7 @@ class Admin
                     </div>
                     <button type="button" class="copy-post-modal__close copy-post-close" aria-label="<?php echo esc_attr__('Закрыть', 'copy-post'); ?>">&times;</button>
                 </header>
-                <?php $this->render_panel([], 'modal'); ?>
+                <?php $this->render_panel([], 'modal', (string) $screen->post_type); ?>
             </div>
         </dialog>
         <?php
@@ -476,6 +492,18 @@ class Admin
                 $notice = 'expired';
             }
         }
+
+        $panel_post_type = '';
+
+        if ($post_ids !== []) {
+            $panel_post_type = (string) get_post_type($post_ids[0]);
+        } else {
+            $types = Settings::post_types();
+            $requested_type = isset($_GET['cp_type']) ? sanitize_key(wp_unslash($_GET['cp_type'])) : '';
+            $panel_post_type = in_array($requested_type, $types, true)
+                ? $requested_type
+                : ($types[0] ?? 'post');
+        }
         ?>
         <div class="wrap copy-post-tools">
             <h1><?php echo esc_html__('Копирование записей', 'copy-post'); ?></h1>
@@ -508,11 +536,11 @@ class Admin
                         <?php echo esc_html__('Выбрать другие записи', 'copy-post'); ?>
                     </a>
                 </p>
-                <?php $this->render_panel($post_ids, 'page'); ?>
+                <?php $this->render_panel($post_ids, 'page', $panel_post_type); ?>
             <?php else : ?>
                 <?php $this->render_filters(); ?>
                 <?php $this->render_table(); ?>
-                <?php $this->render_panel([], 'page'); ?>
+                <?php $this->render_panel([], 'page', $panel_post_type); ?>
             <?php endif; ?>
         </div>
         <?php
@@ -736,11 +764,15 @@ class Admin
     /**
      * @param int[] $post_ids
      */
-    private function render_panel(array $post_ids, string $mode): void
+    private function render_panel(array $post_ids, string $mode, string $post_type = ''): void
     {
         $targets = Sites::all();
         $settings = Settings::all();
         $post_ids = array_values(array_filter(array_map('absint', $post_ids)));
+
+        if ($post_type === '') {
+            $post_type = Settings::post_types()[0] ?? 'post';
+        }
 
         include COPY_POST_DIR . 'templates/copy-panel.php';
     }

@@ -3,7 +3,7 @@
  * Plugin Name: Copy Post
  * Plugin URI: https://github.com/igor-blag/copy-post
  * Description: Копирование записей и страниц между сайтами сети WordPress Multisite.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Requires at least: 6.1
  * Requires PHP: 7.4
  * Author: Igor Blag
@@ -18,7 +18,7 @@
 
 defined('ABSPATH') || exit;
 
-define('COPY_POST_VERSION', '1.0.0');
+define('COPY_POST_VERSION', '1.1.0');
 define('COPY_POST_FILE', __FILE__);
 define('COPY_POST_DIR', plugin_dir_path(__FILE__));
 define('COPY_POST_URL', plugin_dir_url(__FILE__));

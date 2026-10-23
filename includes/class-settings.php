@@ -334,7 +334,7 @@ class Settings
                         <td>
                             <fieldset>
                                 <?php
-                                $this->checkbox($settings, 'copy_taxonomies', __('Таксономии (категории, метки, произвольные)', 'copy-post'));
+                                $this->checkbox($settings, 'copy_taxonomies', __('Копировать таксономии с источника по умолчанию', 'copy-post'));
                                 $this->checkbox($settings, 'copy_meta', __('Произвольные поля (мета)', 'copy-post'));
                                 $this->checkbox($settings, 'copy_media', __('Медиа: миниатюра и файлы из контента/меты', 'copy-post'));
                                 $this->checkbox($settings, 'copy_comments', __('Комментарии (только при создании копии)', 'copy-post'));

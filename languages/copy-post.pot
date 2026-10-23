@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Copy Post 1.0.0\n"
+"Project-Id-Version: Copy Post 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/copy-post\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-23T08:28:26+00:00\n"
+"POT-Creation-Date: 2026-10-23T09:35:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: copy-post\n"
@@ -41,7 +41,7 @@ msgstr ""
 
 #: includes/class-admin.php:41
 #: includes/class-admin.php:42
-#: includes/class-admin.php:481
+#: includes/class-admin.php:509
 #: includes/class-settings.php:185
 #: includes/class-settings.php:186
 #: includes/class-settings.php:295
@@ -93,12 +93,12 @@ msgid "На сайте"
 msgstr ""
 
 #: includes/class-admin.php:119
-#: templates/copy-panel.php:167
+#: templates/copy-panel.php:177
 msgid "Повторить ошибки"
 msgstr ""
 
 #: includes/class-admin.php:120
-#: templates/copy-panel.php:146
+#: templates/copy-panel.php:156
 msgid "Остановить"
 msgstr ""
 
@@ -124,168 +124,258 @@ msgstr ""
 msgid "Создано: %1$d, обновлено: %2$d, пропущено: %3$d, ошибок: %4$d"
 msgstr ""
 
-#: includes/class-admin.php:163
+#: includes/class-admin.php:127
+msgid "Загрузка таксономий…"
+msgstr ""
+
+#: includes/class-admin.php:128
+msgid "Не удалось загрузить таксономии."
+msgstr ""
+
+#: includes/class-admin.php:129
+msgid "У этого типа записи на целевом сайте нет таксономий."
+msgstr ""
+
+#: includes/class-admin.php:130
+msgid "Терминов пока нет."
+msgstr ""
+
+#: includes/class-admin.php:131
+msgid "Поиск терминов…"
+msgstr ""
+
+#: includes/class-admin.php:132
+msgid "Создать"
+msgstr ""
+
+#: includes/class-admin.php:133
+msgid "Название нового термина"
+msgstr ""
+
+#: includes/class-admin.php:134
+msgid "Родительский термин"
+msgstr ""
+
+#: includes/class-admin.php:135
+msgid "— верхний уровень —"
+msgstr ""
+
+#: includes/class-admin.php:136
+msgid "Очищать невыбранные таксономии на этом сайте"
+msgstr ""
+
+#: includes/class-admin.php:137
+msgid "Если снять, таксономии без выбора останутся как на целевом сайте."
+msgstr ""
+
+#: includes/class-admin.php:138
+msgid "Копировать с источника"
+msgstr ""
+
+#: includes/class-admin.php:139
+msgid "Выбрать на сайте"
+msgstr ""
+
+#: includes/class-admin.php:140
+msgid "Не копировать"
+msgstr ""
+
+#: includes/class-admin.php:141
+msgid "Термин добавлен в список."
+msgstr ""
+
+#: includes/class-admin.php:142
+msgid "Дождитесь загрузки таксономий для выбранных сайтов."
+msgstr ""
+
 #: includes/class-admin.php:179
-#: includes/class-admin.php:398
+#: includes/class-admin.php:195
+#: includes/class-admin.php:414
 msgid "Копировать на сайт…"
 msgstr ""
 
-#: includes/class-admin.php:270
-#: includes/class-admin.php:275
-#: includes/class-admin.php:664
+#: includes/class-admin.php:286
+#: includes/class-admin.php:291
+#: includes/class-admin.php:692
 msgid "Связи"
 msgstr ""
 
-#: includes/class-admin.php:296
+#: includes/class-admin.php:312
 msgid "Источник"
 msgstr ""
 
-#: includes/class-admin.php:307
+#: includes/class-admin.php:323
 msgid "Копии на других сайтах"
 msgstr ""
 
-#: includes/class-admin.php:325
+#: includes/class-admin.php:341
 msgid "Данные источника отсутствуют."
 msgstr ""
 
-#: includes/class-admin.php:332
+#: includes/class-admin.php:348
 msgid "Сайт:"
 msgstr ""
 
-#: includes/class-admin.php:334
+#: includes/class-admin.php:350
 msgid "Запись:"
 msgstr ""
 
-#: includes/class-admin.php:340
+#: includes/class-admin.php:356
 msgid "Скопирована:"
 msgstr ""
 
-#: includes/class-admin.php:344
+#: includes/class-admin.php:360
 msgid "Открыть на исходном сайте"
 msgstr ""
 
-#: includes/class-admin.php:355
+#: includes/class-admin.php:371
 msgid "Копий пока нет."
 msgstr ""
 
-#: includes/class-admin.php:420
+#: includes/class-admin.php:436
 msgid "Копировать на сайт"
 msgstr ""
 
-#: includes/class-admin.php:423
-#: templates/copy-panel.php:136
+#: includes/class-admin.php:439
+#: templates/copy-panel.php:146
 msgid "Закрыть"
 msgstr ""
 
-#: includes/class-admin.php:434
+#: includes/class-admin.php:450
 msgid "Недостаточно прав для копирования записей."
 msgstr ""
 
-#: includes/class-admin.php:483
+#: includes/class-admin.php:511
 msgid "Скопируйте записи и страницы текущего сайта на другие сайты сети. Перед запуском можно выбрать сайты и состав данных."
 msgstr ""
 
-#: includes/class-admin.php:489
+#: includes/class-admin.php:517
 msgid "Выбранные записи"
 msgstr ""
 
-#: includes/class-admin.php:508
+#: includes/class-admin.php:536
 msgid "Выбрать другие записи"
 msgstr ""
 
-#: includes/class-admin.php:528
+#: includes/class-admin.php:556
 msgid "Не выбрано ни одной записи для копирования."
 msgstr ""
 
-#: includes/class-admin.php:529
+#: includes/class-admin.php:557
 msgid "Выбор записей устарел. Выберите записи заново."
 msgstr ""
 
-#: includes/class-admin.php:530
+#: includes/class-admin.php:558
 msgid "Запись недоступна для копирования."
 msgstr ""
 
-#: includes/class-admin.php:557
+#: includes/class-admin.php:585
 msgid "Все статусы"
 msgstr ""
 
-#: includes/class-admin.php:558
+#: includes/class-admin.php:586
 msgid "Опубликованные"
 msgstr ""
 
-#: includes/class-admin.php:559
+#: includes/class-admin.php:587
 msgid "Черновики"
 msgstr ""
 
-#: includes/class-admin.php:560
+#: includes/class-admin.php:588
 msgid "На рассмотрении"
 msgstr ""
 
-#: includes/class-admin.php:561
+#: includes/class-admin.php:589
 msgid "Личные"
 msgstr ""
 
-#: includes/class-admin.php:562
+#: includes/class-admin.php:590
 msgid "Запланированные"
 msgstr ""
 
-#: includes/class-admin.php:577
+#: includes/class-admin.php:605
 msgid "Тип записи"
 msgstr ""
 
-#: includes/class-admin.php:592
-#: includes/class-admin.php:662
+#: includes/class-admin.php:620
+#: includes/class-admin.php:690
 msgid "Статус"
 msgstr ""
 
-#: includes/class-admin.php:603
+#: includes/class-admin.php:631
 msgid "Поиск"
 msgstr ""
 
-#: includes/class-admin.php:604
+#: includes/class-admin.php:632
 msgid "Поиск записей…"
 msgstr ""
 
-#: includes/class-admin.php:607
+#: includes/class-admin.php:635
 msgid "Фильтровать"
 msgstr ""
 
-#: includes/class-admin.php:658
+#: includes/class-admin.php:686
 msgid "Выбрать все записи"
 msgstr ""
 
-#: includes/class-admin.php:660
+#: includes/class-admin.php:688
 msgid "Заголовок"
 msgstr ""
 
-#: includes/class-admin.php:661
+#: includes/class-admin.php:689
 msgid "Тип"
 msgstr ""
 
-#: includes/class-admin.php:663
+#: includes/class-admin.php:691
 msgid "Дата"
 msgstr ""
 
-#: includes/class-admin.php:670
+#: includes/class-admin.php:698
 msgid "Записей не найдено."
 msgstr ""
 
 #. translators: %s: post title.
-#: includes/class-admin.php:688
+#: includes/class-admin.php:716
 #, php-format
 msgid "Выбрать «%s»"
 msgstr ""
 
-#: includes/class-ajax.php:40
+#: includes/class-ajax.php:42
 msgid "Не указана запись."
 msgstr ""
 
-#: includes/class-ajax.php:44
+#: includes/class-ajax.php:46
 msgid "Не выбран целевой сайт."
 msgstr ""
 
-#: includes/class-ajax.php:66
+#: includes/class-ajax.php:68
 msgid "Нет доступа к записи."
+msgstr ""
+
+#: includes/class-ajax.php:86
+#: includes/class-ajax.php:162
+#: includes/class-copier.php:65
+msgid "Нет доступа к целевому сайту."
+msgstr ""
+
+#: includes/class-ajax.php:96
+msgid "Тип записи не зарегистрирован на целевом сайте."
+msgstr ""
+
+#: includes/class-ajax.php:174
+msgid "Таксономия не зарегистрирована на целевом сайте."
+msgstr ""
+
+#: includes/class-ajax.php:176
+msgid "Эта таксономия не относится к выбранному типу записи."
+msgstr ""
+
+#: includes/class-ajax.php:183
+msgid "Недостаточно прав для создания терминов на целевом сайте."
+msgstr ""
+
+#: includes/class-ajax.php:243
+msgid "Не удалось прочитать созданный термин."
 msgstr ""
 
 #: includes/class-copier.php:22
@@ -316,74 +406,78 @@ msgstr ""
 msgid "Нельзя копировать запись на тот же сайт."
 msgstr ""
 
-#: includes/class-copier.php:65
-msgid "Нет доступа к целевому сайту."
-msgstr ""
-
 #. translators: 1: post type, 2: site name.
-#: includes/class-copier.php:247
+#: includes/class-copier.php:312
 #, php-format
 msgid "Тип записи «%1$s» не зарегистрирован на сайте «%2$s»."
 msgstr ""
 
-#: includes/class-copier.php:279
+#: includes/class-copier.php:344
 msgid "Нет прав на обновление существующей копии."
 msgstr ""
 
-#: includes/class-copier.php:316
+#: includes/class-copier.php:381
 msgid "Недостаточно прав для публикации — копия сохранена как черновик."
 msgstr ""
 
-#: includes/class-copier.php:327
+#: includes/class-copier.php:392
 msgid "Автор не является участником целевого сайта — использован текущий пользователь."
 msgstr ""
 
-#: includes/class-copier.php:345
+#: includes/class-copier.php:410
 msgid "Нет прав на редактирование чужих записей — автором копии назначен текущий пользователь."
 msgstr ""
 
-#: includes/class-copier.php:358
+#: includes/class-copier.php:423
 msgid "Родительская запись не скопирована — копия создана на верхнем уровне."
 msgstr ""
 
 #. translators: %s: template name.
-#: includes/class-copier.php:372
+#: includes/class-copier.php:437
 #, php-format
 msgid "Шаблон страницы «%s» отсутствует в теме целевого сайта."
 msgstr ""
 
-#: includes/class-copier.php:423
+#: includes/class-copier.php:488
 msgid "неизвестная ошибка вставки"
 msgstr ""
 
 #. translators: %s: error message.
-#: includes/class-copier.php:429
+#: includes/class-copier.php:494
 #, php-format
 msgid "Не удалось создать копию: %s"
 msgstr ""
 
 #. translators: %s: post format.
-#: includes/class-copier.php:466
+#: includes/class-copier.php:539
 #, php-format
 msgid "Формат записи «%s» не поддерживается темой целевого сайта."
 msgstr ""
 
 #. translators: %s: taxonomy name.
-#: includes/class-copier.php:597
+#: includes/class-copier.php:670
+#: includes/class-copier.php:785
 #, php-format
 msgid "Таксономия «%s» не зарегистрирована на целевом сайте."
 msgstr ""
 
 #. translators: 1: term name, 2: error message.
-#: includes/class-copier.php:618
+#: includes/class-copier.php:691
 #, php-format
 msgid "Не удалось создать термин «%1$s»: %2$s"
 msgstr ""
 
 #. translators: 1: taxonomy name, 2: error message.
-#: includes/class-copier.php:672
+#: includes/class-copier.php:745
+#: includes/class-copier.php:816
 #, php-format
 msgid "Не удалось назначить таксономию «%1$s»: %2$s"
+msgstr ""
+
+#. translators: 1: term ID, 2: taxonomy name.
+#: includes/class-copier.php:801
+#, php-format
+msgid "Термин #%1$d не найден в таксономии «%2$s» на целевом сайте."
 msgstr ""
 
 #. translators: %s: attachment title.
@@ -465,27 +559,26 @@ msgid "Данные"
 msgstr ""
 
 #: includes/class-settings.php:337
-#: templates/copy-panel.php:75
-msgid "Таксономии (категории, метки, произвольные)"
+msgid "Копировать таксономии с источника по умолчанию"
 msgstr ""
 
 #: includes/class-settings.php:338
-#: templates/copy-panel.php:76
+#: templates/copy-panel.php:77
 msgid "Произвольные поля (мета)"
 msgstr ""
 
 #: includes/class-settings.php:339
-#: templates/copy-panel.php:77
+#: templates/copy-panel.php:78
 msgid "Медиа: миниатюра и файлы из контента/меты"
 msgstr ""
 
 #: includes/class-settings.php:340
-#: templates/copy-panel.php:82
+#: templates/copy-panel.php:83
 msgid "Комментарии (только при создании копии)"
 msgstr ""
 
 #: includes/class-settings.php:341
-#: templates/copy-panel.php:78
+#: templates/copy-panel.php:79
 msgid "Дата и время публикации"
 msgstr ""
 
@@ -494,7 +587,7 @@ msgid "Автор (с проверкой участия в целевом сай
 msgstr ""
 
 #: includes/class-settings.php:343
-#: templates/copy-panel.php:80
+#: templates/copy-panel.php:81
 msgid "Закрепление записи (sticky)"
 msgstr ""
 
@@ -503,27 +596,27 @@ msgid "Переписывать ссылки исходного сайта на 
 msgstr ""
 
 #: includes/class-settings.php:351
-#: templates/copy-panel.php:88
+#: templates/copy-panel.php:89
 msgid "Поведение"
 msgstr ""
 
 #: includes/class-settings.php:354
-#: templates/copy-panel.php:106
+#: templates/copy-panel.php:107
 msgid "Статус копии"
 msgstr ""
 
 #: includes/class-settings.php:357
-#: templates/copy-panel.php:109
+#: templates/copy-panel.php:110
 msgid "Черновик"
 msgstr ""
 
 #: includes/class-settings.php:358
-#: templates/copy-panel.php:112
+#: templates/copy-panel.php:113
 msgid "Как у оригинала"
 msgstr ""
 
 #: includes/class-settings.php:363
-#: templates/copy-panel.php:91
+#: templates/copy-panel.php:92
 msgid "Если копия уже есть"
 msgstr ""
 
@@ -607,70 +700,82 @@ msgstr ""
 msgid "Сохранить настройки"
 msgstr ""
 
-#: templates/copy-panel.php:37
+#: templates/copy-panel.php:39
 msgid "Целевые сайты"
 msgstr ""
 
-#: templates/copy-panel.php:40
+#: templates/copy-panel.php:42
 msgid "Нет доступных целевых сайтов. Проверьте, что вы участник других сайтов сети и имеете право редактировать записи."
 msgstr ""
 
-#: templates/copy-panel.php:45
+#: templates/copy-panel.php:47
 msgid "Выбрать все"
 msgstr ""
 
-#: templates/copy-panel.php:51
+#: templates/copy-panel.php:53
 msgid "Поиск сайта…"
 msgstr ""
 
-#: templates/copy-panel.php:52
+#: templates/copy-panel.php:54
 msgid "Поиск сайта"
 msgstr ""
 
-#: templates/copy-panel.php:72
+#: templates/copy-panel.php:74
 msgid "Что копировать"
 msgstr ""
 
-#: templates/copy-panel.php:79
+#: templates/copy-panel.php:80
 msgid "Автор"
 msgstr ""
 
-#: templates/copy-panel.php:81
+#: templates/copy-panel.php:82
 msgid "Переписывать ссылки исходного сайта"
 msgstr ""
 
-#: templates/copy-panel.php:94
+#: templates/copy-panel.php:95
 msgid "Создать новую"
 msgstr ""
 
-#: templates/copy-panel.php:97
+#: templates/copy-panel.php:98
 msgid "Обновить существующую"
 msgstr ""
 
-#: templates/copy-panel.php:100
+#: templates/copy-panel.php:101
 msgid "Пропустить"
 msgstr ""
 
-#: templates/copy-panel.php:115
+#: templates/copy-panel.php:116
 msgid "Опубликовать"
 msgstr ""
 
-#: templates/copy-panel.php:121
+#: templates/copy-panel.php:122
 msgid "Выбрано записей:"
 msgstr ""
 
+#: templates/copy-panel.php:129
+msgid "Таксономии на целевых сайтах"
+msgstr ""
+
 #: templates/copy-panel.php:131
+msgid "Для каждого выбранного сайта можно скопировать таксономии с источника, выбрать существующие термины на целевом сайте или не копировать их. Ручной выбор отменяет копирование таксономий с источника для этого сайта."
+msgstr ""
+
+#: templates/copy-panel.php:134
+msgid "Выберите целевой сайт, чтобы настроить таксономии."
+msgstr ""
+
+#: templates/copy-panel.php:141
 msgid "Копировать"
 msgstr ""
 
-#: templates/copy-panel.php:157
+#: templates/copy-panel.php:167
 msgid "Запись"
 msgstr ""
 
-#: templates/copy-panel.php:158
+#: templates/copy-panel.php:168
 msgid "Сайт"
 msgstr ""
 
-#: templates/copy-panel.php:159
+#: templates/copy-panel.php:169
 msgid "Результат"
 msgstr ""
