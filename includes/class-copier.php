@@ -434,7 +434,10 @@ class Copier
 
             $new_id = (int) $new_id;
 
-            self::copy_terms($payload, $new_id, $warnings);
+            if (!empty($options['copy_taxonomies'])) {
+                self::copy_terms($payload, $new_id, $warnings);
+            }
+
             self::copy_meta($payload, $new_id, (array) $media['map'], $url_map, $options, $action === 'updated', $warnings);
 
             $thumbnail_id = (int) $payload['thumbnail_id'];
